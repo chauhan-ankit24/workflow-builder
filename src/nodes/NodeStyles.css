@@ -1,0 +1,131 @@
+/* Custom styles for workflow nodes */
+
+.react-flow__node {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.react-flow__node:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.react-flow__node.selected {
+  box-shadow: 0 0 0 2px #3b82f6, 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Node handles */
+.react-flow__handle {
+  width: 12px;
+  height: 12px;
+  border: 2px solid white;
+  background: #6b7280;
+}
+
+.react-flow__handle:hover {
+  background: #3b82f6;
+}
+
+.react-flow__handle-connecting {
+  background: #10b981;
+}
+
+/* Start node specific styles */
+.react-flow__node-start {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.react-flow__node-start .react-flow__handle {
+  background: #059669;
+}
+
+/* Condition node specific styles */
+.react-flow__node-condition {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.react-flow__node-condition .react-flow__handle {
+  background: #d97706;
+}
+
+/* Send message node specific styles */
+.react-flow__node-sendMessage {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.react-flow__node-sendMessage .react-flow__handle {
+  background: #2563eb;
+}
+
+/* Follow user node specific styles */
+.react-flow__node-followUser {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+}
+
+.react-flow__node-followUser .react-flow__handle {
+  background: #7c3aed;
+}
+
+/* Wait timer node specific styles */
+.react-flow__node-waitTimer {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.react-flow__node-waitTimer .react-flow__handle {
+  background: #dc2626;
+}
+
+/* Edge styles */
+.react-flow__edge {
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected {
+  stroke: #3b82f6;
+  stroke-width: 3;
+}
+
+/* Mini map styles */
+.react-flow__minimap {
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+
+.react-flow__minimap-node {
+  fill: #e5e7eb;
+  stroke: #9ca3af;
+}
+
+.react-flow__minimap-node:hover {
+  fill: #3b82f6;
+}
+
+/* Controls styles */
+.react-flow__controls {
+  bottom: 20px;
+  left: 20px;
+}
+
+.react-flow__controls button {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  color: #6b7280;
+  padding: 8px;
+  margin: 2px;
+  transition: all 0.2s ease;
+}
+
+.react-flow__controls button:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+.react-flow__controls button:active {
+  background: #f3f4f6;
+}
