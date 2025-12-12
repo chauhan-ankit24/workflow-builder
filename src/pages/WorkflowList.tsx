@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFlowStore } from "../store/useFlowStore";
-import {
-  showInfoToast,
-  // showErrorToast,
-  // showSuccessToast,
-} from "../utils/toast";
+import { showInfoToast } from "../utils/toast";
 
 interface Workflow {
   id: string;
@@ -18,13 +14,8 @@ interface Workflow {
 
 const WorkflowList: React.FC = () => {
   const navigate = useNavigate();
-  const {
-    workflows,
-    loadWorkflows,
-    deleteWorkflow,
-    setCurrentWorkflow,
-    // buildWorkflow,
-  } = useFlowStore();
+  const { workflows, loadWorkflows, deleteWorkflow, setCurrentWorkflow } =
+    useFlowStore();
 
   useEffect(() => {
     loadWorkflows();
@@ -45,7 +36,7 @@ const WorkflowList: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-gray-50">
-      {/* Sticky Header */}
+      {}
       <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
         <div className="px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900">Workflows</h1>
@@ -55,7 +46,7 @@ const WorkflowList: React.FC = () => {
               showInfoToast("Creating new workflow...");
               setTimeout(() => {
                 navigate("/create");
-              }, 1000);
+              }, 600);
             }}
             className="cursor-pointer bg-blue-600 hover:bg-blue-700 active:scale-[0.97] text-white px-4 py-2 rounded-lg transition-all"
           >
@@ -64,9 +55,9 @@ const WorkflowList: React.FC = () => {
         </div>
       </header>
 
-      {/* Scrollable Content */}
+      {}
       <main className="flex-1 overflow-y-auto no-scrollbar px-6 py-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {workflows.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-gray-600 text-xl font-medium">
@@ -77,58 +68,72 @@ const WorkflowList: React.FC = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid cursor-pointer grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {workflows.map((workflow: Workflow) => (
                 <div
                   key={workflow.id}
-                  className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow transition-all duration-200 flex flex-col"
+                  className="relative bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all duration-150 flex items-center justify-between gap-4 h-20"
                 >
-                  {/* Content Wrapper (fixed height area) */}
-                  <div className="flex-1 min-h-[100px] flex flex-col">
-                    {/* Title */}
-                    <h3 className="text-base font-semibold text-gray-900 mb-1 w-full truncate">
+                  {}
+                  <div className="flex flex-col text-left justify-center min-w-0 flex-1 max-w-[calc(100%-88px)]">
+                    <h3
+                      className="text-base font-semibold text-gray-900 truncate leading-tight"
+                      title={workflow.name}
+                    >
                       {workflow.name}
                     </h3>
-
-                    {/* Description */}
-                    {workflow.description ? (
-                      <p className="text-gray-500 text-xs mb-3 w-full line-clamp-2 overflow-hidden text-ellipsis">
-                        {workflow.description}
-                      </p>
-                    ) : (
-                      // Empty placeholder to maintain height
-                      <div className="h-6 mb-3"></div>
-                    )}
-
-                    {/* Stats */}
-                    <div className="flex justify-between text-[11px] text-gray-500 mb-2 w-full">
-                      <span className="truncate w-1/2 text-left">
-                        {workflow.nodeCount} nodes
-                      </span>
-                      <span className="truncate w-1/2 text-right">
-                        {workflow.edgeCount} connections
-                      </span>
-                    </div>
-
-                    {/* Last updated */}
-                    <div className="text-right text-[10px] text-gray-400 mb-3 w-full truncate">
-                      Updated {workflow.updatedAt.toLocaleDateString()}
-                    </div>
+                    <p
+                      className="text-gray-500 text-sm mt-1 truncate leading-tight"
+                      title={workflow.description || "No description"}
+                    >
+                      {workflow.description || "\u00A0"}
+                    </p>
                   </div>
 
-                  {/* Buttons (always bottom aligned) */}
-                  <div className="grid grid-cols-2 gap-2 w-full mt-auto">
-                    <button
-                      onClick={() => handleEdit(workflow.id)}
-                      className="cursor-pointer w-full bg-blue-600 text-white py-1.5 rounded-md text-xs hover:bg-blue-700 active:scale-95 transition-all"
-                    >
-                      Edit
-                    </button>
+                  {}
+                  <div className="flex items-center gap-2 shrink-0 w-20">
                     <button
                       onClick={() => handleDelete(workflow.id)}
-                      className="cursor-pointer w-full bg-red-600 text-white py-1.5 rounded-md text-xs hover:bg-red-700 active:scale-95 transition-all"
+                      aria-label={`Delete ${workflow.name}`}
+                      title="Delete workflow"
+                      className="p-2 rounded-md hover:bg-red-50 transition-colors cursor-pointer"
                     >
-                      Delete
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 text-red-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 7h12M9 7v10a2 2 0 002 2h2a2 2 0 002-2V7M10 7V5a2 2 0 012-2h0a2 2 0 012 2v2"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      onClick={() => handleEdit(workflow.id)}
+                      aria-label={`Open ${workflow.name}`}
+                      title="Open editor"
+                      className="p-2 rounded-md hover:bg-blue-50 transition-colors cursor-pointer"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 text-blue-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>

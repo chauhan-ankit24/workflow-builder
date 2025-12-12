@@ -39,7 +39,7 @@ const CreateWorkflow: React.FC = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Name Field */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1 text-left">
               Workflow Name <span className="text-red-500">*</span>
@@ -54,7 +54,7 @@ const CreateWorkflow: React.FC = () => {
             />
           </div>
 
-          {/* Description Field */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1 text-left">
               Description
@@ -68,7 +68,7 @@ const CreateWorkflow: React.FC = () => {
             />
           </div>
 
-          {/* Buttons */}
+          {}
           <div className="flex space-x-3 pt-3">
             <button
               type="button"

@@ -3,7 +3,7 @@ export const detectCycles = (edges: { source: string; target: string }[]): boole
   const visited = new Set<string>();
   const recStack = new Set<string>();
 
-  // Build adjacency list
+  
   edges.forEach(edge => {
     if (!graph.has(edge.source)) {
       graph.set(edge.source, []);
@@ -55,7 +55,7 @@ export const topologicalSort = (edges: { source: string; target: string }[]): st
   const inDegree = new Map<string, number>();
   const allNodes = new Set<string>();
 
-  // Build graph and in-degree map
+  
   edges.forEach(edge => {
     allNodes.add(edge.source);
     allNodes.add(edge.target);
@@ -71,7 +71,7 @@ export const topologicalSort = (edges: { source: string; target: string }[]): st
     }
   });
 
-  // Initialize queue with nodes having in-degree 0
+  
   const queue: string[] = [];
   allNodes.forEach(node => {
     if ((inDegree.get(node) || 0) === 0) {
@@ -95,6 +95,6 @@ export const topologicalSort = (edges: { source: string; target: string }[]): st
     });
   }
 
-  // If result doesn't include all nodes, there's a cycle
+  
   return result.length === allNodes.size ? result : [];
 };

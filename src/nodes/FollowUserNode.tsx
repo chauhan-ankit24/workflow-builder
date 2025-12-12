@@ -19,33 +19,10 @@ const FollowUserNode: React.FC<FollowUserNodeProps> = ({ data }) => {
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <div className="ml-2 flex-1">
+        <div className="mx-2 flex-1">
           <div className="text-lg font-bold text-white">{data.label}</div>
-          <div className="text-sm text-white opacity-75">@{data.username}</div>
         </div>
         <div className="flex space-x-1">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              data.onEdit?.(data.id);
-            }}
-            className="p-1 rounded bg-white/20 hover:bg-white/30 text-white"
-            title="Edit"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-              />
-            </svg>
-          </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -76,7 +53,7 @@ const FollowUserNode: React.FC<FollowUserNodeProps> = ({ data }) => {
         position={Position.Left}
         className="w-3 h-3 bg-pink-500"
       />
-      
+
       <Handle
         type="source"
         position={Position.Right}

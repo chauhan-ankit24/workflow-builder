@@ -9,10 +9,11 @@ import ReactFlow, {
   OnEdgesChange,
   OnConnect,
   ReactFlowInstance,
+  ControlButton,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-// Import node components
+
 import StartNode from "../nodes/StartNode";
 import ConditionNode from "../nodes/ConditionNode";
 import SendMessageNode from "../nodes/SendMessageNode";
@@ -22,7 +23,7 @@ import { useFlowStore } from "../store/useFlowStore";
 import { generateNodeId } from "../utils/idGenerator";
 import { NODE_TYPES, NodeType as NodeTypeObj } from "../nodes";
 
-// Type for node data config
+
 type NodeDataConfig =
   | { condition: string }
   | { recipient: string; message: string }
@@ -30,7 +31,7 @@ type NodeDataConfig =
   | { hours: number; minutes: number }
   | Record<string, never>;
 
-// Node types registry mapping type strings to React components
+
 const nodeTypesRegistry = {
   start: StartNode,
   condition: ConditionNode,
@@ -58,10 +59,14 @@ const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   const editNode = useFlowStore((state) => state.editNode);
   const setSelectedNode = useFlowStore((state) => state.setSelectedNode);
   const addNode = useFlowStore((state) => state.addNode);
+  const undo = useFlowStore((state) => state.undo);
+  const redo = useFlowStore((state) => state.redo);
+  const canUndo = useFlowStore((state) => state.canUndo);
+  const canRedo = useFlowStore((state) => state.canRedo);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
 
-  // Add delete and edit functions to each node's data
+  
   const nodesWithActions = nodes.map((node) => ({
     ...node,
     data: {
@@ -162,7 +167,14 @@ const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         attributionPosition="top-right"
         onInit={(instance) => (reactFlowInstance.current = instance)}
       >
-        <Controls />
+        <Controls>
+          <ControlButton onClick={undo} disabled={!canUndo} title="Undo">
+            ↶
+          </ControlButton>
+          <ControlButton onClick={redo} disabled={!canRedo} title="Redo">
+            ↷
+          </ControlButton>
+        </Controls>
         <MiniMap />
         <Background gap={12} size={1} />
       </ReactFlow>
