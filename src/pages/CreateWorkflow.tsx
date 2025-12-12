@@ -75,7 +75,7 @@ const CreateWorkflow: React.FC = () => {
               onClick={() => navigate("/")}
               className="flex-1 cursor-pointer px-4 py-2 rounded-md text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 active:scale-95 transition-all"
             >
-              Cancel
+              Back
             </button>
 
             <button

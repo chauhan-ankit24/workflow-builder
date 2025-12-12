@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFlowStore } from "../store/useFlowStore";
 import { showInfoToast } from "../utils/toast";
@@ -17,6 +17,9 @@ const WorkflowList: React.FC = () => {
   const { workflows, loadWorkflows, deleteWorkflow, setCurrentWorkflow } =
     useFlowStore();
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [workflowToDelete, setWorkflowToDelete] = useState<Workflow | null>(null);
+
   useEffect(() => {
     loadWorkflows();
   }, [loadWorkflows]);
@@ -27,11 +30,23 @@ const WorkflowList: React.FC = () => {
     showInfoToast("Navigating to workflow editor...");
   };
 
-  const handleDelete = (workflowId: string) => {
-    if (window.confirm("Are you sure you want to delete this workflow?")) {
-      deleteWorkflow(workflowId);
+  const handleDeleteClick = (workflow: Workflow) => {
+    setWorkflowToDelete(workflow);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (workflowToDelete) {
+      deleteWorkflow(workflowToDelete.id);
       showInfoToast("Workflow deleted");
+      setIsDeleteModalOpen(false);
+      setWorkflowToDelete(null);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setWorkflowToDelete(null);
   };
 
   return (
@@ -93,7 +108,7 @@ const WorkflowList: React.FC = () => {
                   {}
                   <div className="flex items-center gap-2 shrink-0 w-20">
                     <button
-                      onClick={() => handleDelete(workflow.id)}
+                      onClick={() => handleDeleteClick(workflow)}
                       aria-label={`Delete ${workflow.name}`}
                       title="Delete workflow"
                       className="p-2 rounded-md hover:bg-red-50 transition-colors cursor-pointer"
@@ -142,6 +157,34 @@ const WorkflowList: React.FC = () => {
           )}
         </div>
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && workflowToDelete && (
+        <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Delete Workflow
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete "{workflowToDelete.name}"?
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={handleCancelDelete}
+                className="px-4 cursor-pointer py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmDelete}
+                className="px-4 cursor-pointer py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

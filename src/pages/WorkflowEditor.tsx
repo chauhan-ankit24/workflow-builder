@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../panels/Sidebar";
 import WorkflowCanvas from "../workflow/WorkflowCanvas";
 import ConfigurationPanel from "../panels/ConfigurationPanel";
@@ -7,6 +7,7 @@ import { useFlowStore } from "../store/useFlowStore";
 
 const WorkflowEditor: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const {
     nodes,
     edges,
@@ -31,6 +32,12 @@ const WorkflowEditor: React.FC = () => {
         <Sidebar />
         <div className="flex-1 flex flex-col">
           <div className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-gray-600 cursor-pointer hover:bg-gray-700 text-white px-4 py-2 rounded-md font-medium mr-4"
+            >
+              Back
+            </button>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
                 {workflowName || `Workflow ${id}`}
