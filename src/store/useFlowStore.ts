@@ -25,6 +25,7 @@ import {
 } from "../utils/localStorage";
 import { validateConnections } from "../workflow/validation/validateConnections";
 import { showErrorToast, showSuccessToast } from "../utils/toast";
+import { exportWorkflowAsJSON } from "../utils/exportWorkflow";
 
 
 export type NodeItem = {
@@ -299,23 +300,35 @@ export const useFlowStore = create<FlowStoreState>()(
     saveWorkflow: () => {
       const state = get();
 
-      
+      // Validate connections
       const validations = validateConnections(state.nodes, state.edges);
       const hasErrors = validations.some((v) => !v.isValid);
 
       if (hasErrors) {
-        
+        // Show first validation error
         const firstError = validations.find((v) => !v.isValid);
         if (firstError?.error) {
           showErrorToast(firstError.error);
         }
-        return false; 
+        return false;
       }
 
-      
+      // Save workflow to storage
       get().saveCurrentWorkflow();
-      showSuccessToast("Workflow saved successfully!");
-      return true; 
+
+      // Export workflow as JSON file
+      if (state.currentWorkflow) {
+        const workflowToExport: Workflow = {
+          ...state.currentWorkflow,
+          nodes: state.nodes,
+          edges: state.edges,
+          updatedAt: new Date(),
+        };
+        exportWorkflowAsJSON(workflowToExport);
+      }
+
+      showSuccessToast("Workflow saved and exported successfully!");
+      return true;
     },
 
     selectedNode: null,
